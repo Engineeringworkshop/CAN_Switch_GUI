@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAN_Switch_GUI", "CAN_Switch_GUI.csproj", "{DEBF1E0A-12E2-4B04-B6EA-DE0EEF805B42}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DEBF1E0A-12E2-4B04-B6EA-DE0EEF805B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBF1E0A-12E2-4B04-B6EA-DE0EEF805B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBF1E0A-12E2-4B04-B6EA-DE0EEF805B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBF1E0A-12E2-4B04-B6EA-DE0EEF805B42}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6BD9E14A-25CE-4A0F-AF5E-580D44E85643}
+	EndGlobalSection
+EndGlobal
