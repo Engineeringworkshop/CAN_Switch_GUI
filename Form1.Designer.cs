@@ -34,7 +34,7 @@
             groupBox1 = new GroupBox();
             radBtn_Rack3 = new RadioButton();
             lbl_Log = new Label();
-            comboBox1 = new ComboBox();
+            cmbBox_DeviceList = new ComboBox();
             label1 = new Label();
             btn_Refresh = new Button();
             groupBox1.SuspendLayout();
@@ -110,13 +110,13 @@
             lbl_Log.TabIndex = 4;
             lbl_Log.Text = "Log text";
             // 
-            // comboBox1
+            // cmbBox_DeviceList
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(402, 100);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(242, 40);
-            comboBox1.TabIndex = 5;
+            cmbBox_DeviceList.FormattingEnabled = true;
+            cmbBox_DeviceList.Location = new Point(402, 100);
+            cmbBox_DeviceList.Name = "cmbBox_DeviceList";
+            cmbBox_DeviceList.Size = new Size(242, 40);
+            cmbBox_DeviceList.TabIndex = 5;
             // 
             // label1
             // 
@@ -144,7 +144,7 @@
             ClientSize = new Size(723, 374);
             Controls.Add(btn_Refresh);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
+            Controls.Add(cmbBox_DeviceList);
             Controls.Add(lbl_Log);
             Controls.Add(groupBox1);
             Name = "Form1";
@@ -163,7 +163,7 @@
         private GroupBox groupBox1;
         private RadioButton radBtn_Rack3;
         private Label lbl_Log;
-        private ComboBox comboBox1;
+        private ComboBox cmbBox_DeviceList;
         private Label label1;
         private Button btn_Refresh;
     }

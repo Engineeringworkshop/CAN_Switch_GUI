@@ -16,7 +16,7 @@ namespace CAN_Switch_GUI
             // Create instance of modules
             logController = new LogController(lbl_Log);
             radioButtonController = new RadioButtonController(radBtn_Rack3);
-            deviceController = new DeviceController(logController, radioButtonController);
+            deviceController = new DeviceController(logController, radioButtonController, cmbBox_DeviceList);
 
             StartRoutine();
         }

@@ -22,20 +22,23 @@ namespace CAN_Switch_GUI.Clases
     {
         private LogController logController;
         private RadioButtonController radioButtonController;
-        private string deviceId;
+        private ComboBox cmbBox_DeviceList;
+        private string[] deviceList;
         private SerialPort ArduinoPort;
         private int numberOfRacks;
 
+
         private int defaultNumberOfRacks = 3;
 
-        public DeviceController(LogController logController, RadioButtonController radioButtonController) 
+        public DeviceController(LogController logController, RadioButtonController radioButtonController, ComboBox cmbBox_DeviceList) 
         {
             this.logController = logController;
             this.radioButtonController = radioButtonController;
+            this.cmbBox_DeviceList = cmbBox_DeviceList;
 
-            this.deviceId = AutodetectArduinoPort();
+            this.deviceList = AutodetectArduinoPort();
 
-            this.ArduinoPort = StartCommunication(deviceId);
+            this.ArduinoPort = StartCommunication(deviceList);
 
             this.numberOfRacks = GetNumberOfRacks();
 
@@ -50,37 +53,42 @@ namespace CAN_Switch_GUI.Clases
                 case SwitchStates.Disconnect:
                     logController.ShowLogText("CAN disconnected");
                     Console.WriteLine("Disconnect");
+                    ArduinoPort.Write("deactivateRelays\n");
                     break;
                 case SwitchStates.Rack1:
                     logController.ShowLogText("CAN of Rack 1 connected");
                     Console.WriteLine("Rack 1");
+                    ArduinoPort.Write("activeRelay1\n");
                     break;
                 case SwitchStates.Rack2:
                     logController.ShowLogText("CAN of Rack 2 connected");
                     Console.WriteLine("Rack 2");
+                    ArduinoPort.Write("activeRelay2\n");
                     break;
                 case SwitchStates.Rack3:
                     logController.ShowLogText("CAN of Rack 3 connected");
                     Console.WriteLine("Rack 3");
+                    ArduinoPort.Write("activeRelay3\n");
                     break;
             }
         }
 
         // Comunication
-        public SerialPort StartCommunication(string deviceId)
+        public SerialPort StartCommunication(string[] deviceList)
         {
-            // If there is a port open it
-            if (deviceId != string.Empty)
+            if (deviceList.Length == 1)
             {
+                cmbBox_DeviceList.SelectedIndex = 0;
+
                 //crear Serial Port
-                ArduinoPort = new SerialPort();
-                ArduinoPort.PortName = deviceId;  //sustituir por vuestro 
-                ArduinoPort.BaudRate = 9600;
-                ArduinoPort.Open();
+                StablishSerialComunication(deviceList[0]);
+
+                logController.ShowLogText("Connected to: " + ArduinoPort.PortName);
             }
-
-
-            logController.ShowLogText("Connected to: " + deviceId);
+            else if (deviceList.Length >= 1)
+            {
+                ArduinoPort.ReadLine();
+            }
 
             return ArduinoPort;
         }
@@ -95,34 +103,27 @@ namespace CAN_Switch_GUI.Clases
             ArduinoPort?.Close();
         }
 
-        public string AutodetectArduinoPort()
+        public string[] AutodetectArduinoPort()
         {
-            ManagementScope connectionScope = new ManagementScope();
-            SelectQuery serialQuery = new SelectQuery("SELECT * FROM Win32_SerialPort");
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(connectionScope, serialQuery);
+            var ports = SerialPort.GetPortNames();
 
-            try
+            foreach (var port in ports)
             {
-                foreach (ManagementObject item in searcher.Get())
-                {
-                    string desc = item["Description"].ToString();
-                    string deviceId = item["DeviceID"].ToString();
-
-                    if (desc != null && deviceId != null && desc.Contains("Arduino"))
-                    {
-                        logController.ShowLogText("Detected: " + deviceId);
-                        return deviceId;
-                    }
-                }
-            }
-            catch (ManagementException e)
-            {
-                logController.ShowLogText(e.ToString());
+                cmbBox_DeviceList.Items.Add(port);
             }
 
-            logController.ShowLogText("No Arduino detected");
+            return ports;
+        }
 
-            return String.Empty;
+        private bool StablishSerialComunication(string port)
+        {
+            //crear Serial Port
+            ArduinoPort = new SerialPort();
+            ArduinoPort.PortName = port;  //sustituir por deviceId vuestro 
+            ArduinoPort.BaudRate = 9600;
+            ArduinoPort.Open();
+
+            return true;
         }
     }
 }
