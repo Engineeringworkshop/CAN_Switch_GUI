@@ -125,5 +125,10 @@ namespace CAN_Switch_GUI.Clases
 
             return true;
         }
+
+        private void Test()
+        {
+            ArduinoPort.write();
+        }
     }
 }
